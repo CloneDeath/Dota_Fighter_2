@@ -1,0 +1,44 @@
+// Dota Heroes File
+"DOTAAbilities"
+{
+	"Version"		"1"
+	
+	"fighter_jump"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"mirana_leap"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"	"axe_battle_hunger"
+		"AbilityCooldown"		"0.0"
+		
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"leap_distance"			"1"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"leap_speed"			".75"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"leap_acceleration"		"600.0"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"leap_radius"		"0"
+			}
+			"05"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"leap_speedbonus"	"0"
+			}
+		}
+	}
+}
