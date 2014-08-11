@@ -47,19 +47,17 @@ function CAddonTemplateGameMode:OnThink()
 end
 
 local Toggle = 0;
-function GameLogic()
-	for i = 0, 1 do
+function GameLogic()	
+	for i = 0, 10 do
 		local ply = PlayerResource:GetPlayer(i);
 		if ply ~= nil and ply:GetAssignedHero() ~= nil then
 			-- Camera
 			PlayerResource:SetCameraTarget(i, ply:GetAssignedHero());
-			
-			Toggle = Toggle + 1;
-			if Toggle >= 3 then
+					
+			if Toggle == 0 then
 				local temp = Entities:CreateByClassname("info_target");
 				temp:SetOrigin(ply:GetAssignedHero():GetOrigin());
 				PlayerResource:SetCameraTarget(i, temp);
-				Toggle = 0;
 			end
 			
 			SendToConsole("dota_camera_pitch_max 10");
@@ -88,6 +86,11 @@ function GameLogic()
 				SendToConsole("bind rightarrow +move_right");
 			end
 		end
+	end
+	
+	Toggle = Toggle + 1;
+	if (Toggle >= 3) then
+		Toggle = 0;
 	end
 end
 
