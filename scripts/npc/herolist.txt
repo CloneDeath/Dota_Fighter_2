@@ -7,4 +7,5 @@
 {
 	"npc_dota_hero_antimage"			"1"
 	"npc_dota_hero_riki"				"1"
+	"npc_dota_hero_queenofpain"			"1"
 }

@@ -1,37 +1,44 @@
-function MoveRight(args)
+function Fighter_MoveRight(args)
 	local ply = Convars:GetDOTACommandClient();
 	local ent = ply:GetAssignedHero();
-	
-	if args[0] == "-" then
-		if ply.Move == "Right" then
-			Stop(args);
-		end
-		return;
-	end
 	
 	ent:MoveToPosition(Entities:FindByName(nil, "right_edge"):GetOrigin());
 	ply.Move = "Right";
 end
 
-function MoveLeft(args)
-	print(args);
+function Fighter_StopRight(args)
 	local ply = Convars:GetDOTACommandClient();
 	local ent = ply:GetAssignedHero();
 	
-	if args[0] == "-" then
-		print("stopping");
-		if ply.Move == "Left" then
-			Stop(args);
-		end
-		return;
+	if ply.Move == "Right" then
+		Stop(args);
 	end
-	print("starting");
+end
+
+function Fighter_MoveLeft(args)
+	local ply = Convars:GetDOTACommandClient();
+	local ent = ply:GetAssignedHero();
+	
 	ent:MoveToPosition(Entities:FindByName(nil, "left_edge"):GetOrigin());
 	ply.Move = "Left";
+end
+
+function Fighter_StopLeft(args)
+	local ply = Convars:GetDOTACommandClient();
+	local ent = ply:GetAssignedHero();
+	
+	if ply.Move == "Left" then
+		Stop(args);
+	end
 end
 
 function Stop(args)	
 	local ply = Convars:GetDOTACommandClient();
 	local ent = ply:GetAssignedHero();
 	ent:MoveToPosition(ent:GetOrigin());
+end
+
+function Fighter_Attack(args)
+	local ent = args.unit;
+	
 end

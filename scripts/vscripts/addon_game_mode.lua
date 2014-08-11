@@ -23,10 +23,11 @@ end
 function CAddonTemplateGameMode:InitGameMode()
 	-- Set up events
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 1 );
-	--ListenToGameEvent("player_spawn", Dynamic_Wrap(CAddonTemplateGameMode, 'OnPlayerSpawn'), self);
-	Convars:RegisterCommand("-moveleft", MoveLeft, "moves hero left", 0);
 	
-	Convars:RegisterCommand("-moveright", MoveRight, "moves hero right", 0);
+	Convars:RegisterCommand("fighter_moveleft", Fighter_MoveLeft, "moves hero left", 0);
+	Convars:RegisterCommand("fighter_stopleft", Fighter_StopLeft, "moves hero left", 0);
+	Convars:RegisterCommand("fighter_moveright", Fighter_MoveRight, "moves hero right", 0);
+	Convars:RegisterCommand("fighter_stopright", Fighter_StopRight, "moves hero left", 0);
 	
 	-- Set up game	
 	GameRules:GetGameModeEntity():SetFogOfWarDisabled(true);
@@ -49,7 +50,7 @@ local Toggle = 0;
 function GameLogic()
 	for i = 0, 1 do
 		local ply = PlayerResource:GetPlayer(i);
-		if ply ~= nil then
+		if ply ~= nil and ply:GetAssignedHero() ~= nil then
 			-- Camera
 			PlayerResource:SetCameraTarget(i, ply:GetAssignedHero());
 			
@@ -64,15 +65,28 @@ function GameLogic()
 			SendToConsole("dota_camera_pitch_max 10");
 			SendToConsole("r_farz 6000");
 			
-			-- Abilities
-			local ability;
+			-- Do Once
+			if ply.Initialized == nil then
+				print("Initializing player " .. i);
+				ply.Initialized = true;
 				
-			ability = ply:GetAssignedHero():FindAbilityByName("fighter_jump");
-			if (ability ~= nil) then ability:SetLevel(1); end
-			
-			-- Stop movement
-			SendToConsole("bind leftarrow +moveleft");
-			SendToConsole("bind rightarrow +moveright");
+				-- Abilities
+				local ability;
+				ability = ply:GetAssignedHero():FindAbilityByName("fighter_jump");
+				if (ability ~= nil) then ability:SetLevel(1); end
+				
+				ability = ply:GetAssignedHero():FindAbilityByName("fighter_attack");
+				if (ability ~= nil) then ability:SetLevel(1); end
+				
+				-- Movement
+				SendToConsole("unbindall");
+				SendToConsole("alias \"+move_left\" \"fighter_moveleft\"");
+				SendToConsole("alias \"-move_left\" \"fighter_stopleft\"");
+				SendToConsole("alias \"+move_right\" \"fighter_moveright\"");
+				SendToConsole("alias \"-move_right\" \"fighter_stopright\"");
+				SendToConsole("bind leftarrow +move_left");
+				SendToConsole("bind rightarrow +move_right");
+			end
 		end
 	end
 end

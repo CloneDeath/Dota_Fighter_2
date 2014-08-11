@@ -10,5 +10,18 @@
 	{
 		"override_hero"				"npc_dota_hero_antimage"	// Hero to override
 		"Ability1"					"fighter_jump"				// Ability 1
+		"Ability2"					"fighter_attack"			// Ability 2
+	}
+	
+	"npc_dota_hero_queenofpain_fighter"
+	{
+		"override_hero"				"npc_dota_hero_queenofpain"		// Hero to override
+		"Ability1"					"fighter_jump"					// Ability 1
+	}
+	
+	"npc_dota_hero_riki_fighter"
+	{
+		"override_hero"				"npc_dota_hero_riki"		// Hero to override
+		"Ability1"					"fighter_jump"					// Ability 1
 	}
 }

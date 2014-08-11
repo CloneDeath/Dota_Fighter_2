@@ -22,12 +22,12 @@
 			"02"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"leap_speed"			".75"
+				"leap_speed"			"2.0"
 			}
 			"03"
 			{
 				"var_type"				"FIELD_FLOAT"
-				"leap_acceleration"		"600.0"
+				"leap_acceleration"		"3000.0"
 			}
 			"04"
 			{
@@ -41,4 +41,24 @@
 			}
 		}
 	}
+	
+	"fighter_attack"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"BaseClass"				"ability_datadriven"
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
+		"AbilityTextureName"	"axe_battle_hunger"
+		"AbilityCooldown"		"0.0"
+		
+		"OnSpellStart"
+		{
+			"RunScript"
+			{
+				"ScriptFile"	"scripts/vscripts/fighter_script.lua"
+				"Function"		"Fighter_Attack"
+			}
+		}
+	}
+	
 }
