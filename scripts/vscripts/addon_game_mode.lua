@@ -24,6 +24,7 @@ function CAddonTemplateGameMode:InitGameMode()
 	-- Set up events
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 1 );
 	
+	-- Register console commands
 	Convars:RegisterCommand("fighter_moveleft", Fighter_MoveLeft, "moves hero left", 0);
 	Convars:RegisterCommand("fighter_stopleft", Fighter_StopLeft, "moves hero left", 0);
 	Convars:RegisterCommand("fighter_moveright", Fighter_MoveRight, "moves hero right", 0);
@@ -32,6 +33,7 @@ function CAddonTemplateGameMode:InitGameMode()
 	-- Set up game	
 	GameRules:GetGameModeEntity():SetFogOfWarDisabled(true);
 	GameRules:GetGameModeEntity():SetCameraDistanceOverride(500);
+	GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible(false);
 end
 
 -- Evaluate the state of the game
@@ -69,21 +71,23 @@ function GameLogic()
 				ply.Initialized = true;
 				
 				-- Abilities
-				local ability;
-				ability = ply:GetAssignedHero():FindAbilityByName("fighter_jump");
-				if (ability ~= nil) then ability:SetLevel(1); end
+				for i = 0, ply:GetAssignedHero():GetAbilityCount() do
+					local ability;
+					ability = ply:GetAssignedHero():GetAbilityByIndex(i);
+					if (ability ~= nil) then ability:SetLevel(1); end
+				end
+				
 				
 				ability = ply:GetAssignedHero():FindAbilityByName("fighter_attack");
 				if (ability ~= nil) then ability:SetLevel(1); end
 				
-				-- Movement
-				SendToConsole("unbindall");
-				SendToConsole("alias \"+move_left\" \"fighter_moveleft\"");
-				SendToConsole("alias \"-move_left\" \"fighter_stopleft\"");
-				SendToConsole("alias \"+move_right\" \"fighter_moveright\"");
-				SendToConsole("alias \"-move_right\" \"fighter_stopright\"");
-				SendToConsole("bind leftarrow +move_left");
-				SendToConsole("bind rightarrow +move_right");
+				-- Movement				
+				FireGameEvent( "dota_fighter_2_run_command", { Command = "alias \"+move_left\" \"cmd fighter_moveleft\""} );
+				FireGameEvent( "dota_fighter_2_run_command", { Command = "alias \"-move_left\" \"cmd fighter_stopleft\""} );
+				FireGameEvent( "dota_fighter_2_run_command", { Command = "alias \"+move_right\" \"cmd fighter_moveright\""} );
+				FireGameEvent( "dota_fighter_2_run_command", { Command = "alias \"-move_right\" \"cmd fighter_stopright\""} );
+				FireGameEvent( "dota_fighter_2_run_command", { Command = "bind leftarrow +move_left\""} );
+				FireGameEvent( "dota_fighter_2_run_command", { Command = "bind rightarrow +move_right\""} );
 			end
 		end
 	end

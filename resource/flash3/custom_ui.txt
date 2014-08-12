@@ -5,11 +5,11 @@
 	// Add a numbered block for each swf file to load when your addon starts
 
 
-	//"1"
-	//{
-	//	"File"		"Example"
-	//	"Depth"		"50"
-	//}
+	"1"
+	{
+		"File"		"FightOverlay"
+		"Depth"		"51"
+	}
 }
 
 // =============================================
